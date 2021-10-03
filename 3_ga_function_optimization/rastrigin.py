@@ -1,5 +1,5 @@
 #GA_for_Ackley.ipynb
-#Genetic algorithm to optimize Ackley's function
+#Genetic algorithm to optimize Rastrigin's function
 #Ayala Segoviano Donaldo Horacio
 
 import math
