@@ -207,9 +207,4 @@ def get_decimal(items):
 
 
 for i in range(iterations):
-
     next_generation()
-    
-    #for c in chromosomes:
-    #    print(c.items)
-    #print()
