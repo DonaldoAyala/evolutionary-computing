@@ -12,7 +12,7 @@ n = 20
 items_values = [random.randint(0, 100) for i in range(n)]
 items_weights = [random.random() for i in range(n)]
 
-print("[")
+print("[", end=" ")
 for i in range(n):
     print((items_values[i], items_weights[i]), end=' ')
 print("]")
@@ -33,7 +33,7 @@ wheel_length = 10 * number_chromosomes
 
 penalization_factor = 1000000
 
-iterations = 100000
+iterations = 10000
 
 ####### PARAMETERS ####### 
 
@@ -163,7 +163,7 @@ iteration_number = 0
 def next_generation():
     global iteration_number
     
-    chromosomes.sort(key=cmp_to_key(compare_chromosomes) )
+    chromosomes.sort(key=cmp_to_key(compare_chromosomes))
     iteration_number += 1
     if (iteration_number == 1 or iteration_number == iterations):
         print( "Best solution so far in iteration ", iteration_number)
@@ -199,12 +199,6 @@ def next_generation():
 
 chromosomes.sort(  key=cmp_to_key(compare_chromosomes))
 evaluate_chromosomes()
-
-def get_decimal(items):
-    value = 0
-    for i in range(len(items)):
-        value += items[i] * (2 ** (len(items) - i))
-
 
 for i in range(iterations):
     next_generation()
