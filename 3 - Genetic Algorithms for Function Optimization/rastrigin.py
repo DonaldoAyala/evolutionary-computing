@@ -8,25 +8,26 @@ import time
 
 from functools import cmp_to_key
 
-
 #Chromosomes are pairs of numbers of 20 bits each
-chromosome_length = 30
+chromosome_length = 20
 possible_chains = 2**chromosome_length
 
 # Number of chromosomes
-number_chromosomes = 1000
+number_chromosomes = 100
 
 # Mutation probability
-mutation_probability = 0.5
+mutation_probability = 1
 
 crossover_point = int(chromosome_length/2)
 
 dimensions = 3
 
+iterations = 100
+
 # Search boundaries
-x = (-20, 20)
-y = (-20, 20)
-z = (-20, 20)
+x = (-10, 10)
+y = (-10, 10)
+z = (-10, 10)
 
 def random_chromosome():
     chromosome = [[] for i in range(dimensions)]
@@ -49,16 +50,17 @@ for i in range(0, number_chromosomes):
     # Initially all chromosomes have a fitnes of 0
     fitness_values.append(0)
 
+
 # binary decodification
 def decode_chromosome(chromosome):
-    global chromosome_length, possible_chains, x, z
+    global chromosome_length, possible_chains, x, y, z
     result = []
-
-    for i in range(dimensions):
+    dimensions_ranges = [x, y, z]
+    for d in range(dimensions):
       value = 0
       for i in range(chromosome_length):
-          value += (2**i)*chromosome[0][-1 - i]
-      value = x[0] + (x[1] - x[0]) * float(value) / (possible_chains - 1)
+          value += (2**i)*chromosome[d][-1 - i]
+      value = dimensions_ranges[d][0] + (dimensions_ranges[d][1] - dimensions_ranges[d][0]) * float(value) / (possible_chains - 1)
       result.append(value)
 
     return result
@@ -87,7 +89,7 @@ def compare_chromosomes(chromosome1, chromosome2):
     else:
         return -1
 
-wheel_length = 10*number_chromosomes
+wheel_length = 10 * number_chromosomes
 
 def create_wheel():
     global chromosomes, fitness_values
@@ -127,10 +129,11 @@ def next_generation():
     
     chromosomes.sort(key=cmp_to_key(compare_chromosomes) )
     iteration_number += 1
-    print("Iteration", iteration_number)
-    print( "Best solution so far:")
-    decoded_chromosome = decode_chromosome(chromosomes[0])
-    print( "f(",decoded_chromosome,")= ", fitness(decoded_chromosome[0], decoded_chromosome[1], decoded_chromosome[0]) )
+    if iteration_number == 1 or iteration_number == iterations:
+        print("Iteration", iteration_number)
+        print( "Best solution so far:")
+        decoded_chromosome = decode_chromosome(chromosomes[0])
+        print( "f(",decoded_chromosome,")= ", fitness(decoded_chromosome[0], decoded_chromosome[1], decoded_chromosome[2]) )
                                                                     
     # Elitism, the best two chromosomes go directly to the next generation
     next_gen_chromosomes[0] = chromosomes[0]
@@ -155,6 +158,7 @@ def next_generation():
         new_chromosome2 = [x2, y2, z2]
 
         #Each descendant is mutated with probability mutation_probability
+        
         if random.random() < mutation_probability:
             if (random.random() < 1/3): # Picking x or z part of the chromosome to mutate
               new_chromosome1[0][int(round(random.random()*(chromosome_length - 1)))] ^= 1
@@ -183,5 +187,5 @@ def next_generation():
 chromosomes.sort(  key=cmp_to_key(compare_chromosomes))
 evaluate_chromosomes()
 
-for i in range(30):
+for i in range(iterations):
   next_generation()
