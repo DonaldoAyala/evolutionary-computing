@@ -22,7 +22,7 @@ chromosome_length = n
 possible_chains = 2**chromosome_length
 
 # Number of chromosomes
-number_chromosomes = 10
+number_chromosomes = 100
 
 # Mutation probability
 mutation_probability = 1
@@ -33,7 +33,7 @@ wheel_length = 10 * number_chromosomes
 
 penalization_factor = 1000000
 
-iterations = 10000
+iterations = 100
 
 ####### PARAMETERS ####### 
 
@@ -196,6 +196,7 @@ def next_generation():
 
     #The generation replaces the old one
     chromosomes[:] = next_gen_chromosomes[:]
+    evaluate_chromosomes()
 
 chromosomes.sort(  key=cmp_to_key(compare_chromosomes))
 evaluate_chromosomes()

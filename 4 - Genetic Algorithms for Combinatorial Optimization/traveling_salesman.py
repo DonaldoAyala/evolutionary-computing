@@ -19,6 +19,11 @@ D = [
     [6366, 4080, 1474, 4281, 697, 5684, 0]
     ]
 
+for r in D:
+    for e in r:
+        print(e, end="")
+    print("\\\\ \\hline")
+
 # Chromosomes will permutations of length n
 chromosome_length = n
 
@@ -221,6 +226,7 @@ def next_generation():
 
     #The generation replaces the old one
     chromosomes[:] = next_gen_chromosomes[:]
+    evaluate_chromosomes()
 
 chromosomes.sort(  key=cmp_to_key(compare_chromosomes))
 evaluate_chromosomes()
