@@ -19,11 +19,6 @@ D = [
     [6366, 4080, 1474, 4281, 697, 5684, 0]
     ]
 
-for r in D:
-    for e in r:
-        print(e, end="")
-    print("\\\\ \\hline")
-
 # Chromosomes will permutations of length n
 chromosome_length = n
 
