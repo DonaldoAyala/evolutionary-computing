@@ -1,4 +1,4 @@
-# Particle Swarm Optimization for the Ackley's function
+# Particle Swarm Optimization for the Rastrigin's function
 # Ayala Segoviano Donaldo Horacio
 # Escuela Superior de Cómputo
 # October 17th 2021
@@ -7,18 +7,19 @@ import numpy as np
 import math
 
 ############################################################################
-lower_limit =- 32
-upper_limit = 32
+lower_limit =- 6
+upper_limit = 6
 
 n_particles = 100
 
-n_dimensions = 2
+n_dimensions = 3
 
-# Definition of Ackley's function
+# Definition of Rastrigin's function
 def f(particle):
     x = particle[0]
-    z = particle[1]
-    return -20*math.exp(-0.2*(math.sqrt(0.5*math.sqrt(x*x + z*z)))) - math.exp(0.5*(math.cos(2*math.pi*x) + math.cos(2*math.pi*z))) + math.exp(1) + 20
+    y = particle[1]
+    z = particle[2]
+    return 30 + x**2 + y**2 + z**2 - 10*math.cos(2*math.pi*x) - 10*math.cos(2*math.pi*y) - 10*math.cos(2*math.pi*z)
 
 # Initialize the particle positions and their velocities with uniformly distributed random vector
 particles = lower_limit + (upper_limit - lower_limit) * np.random.rand(n_particles, n_dimensions) 
@@ -70,5 +71,5 @@ def iteration():
     
 ####################################################################
 # Execution
-for i in range(50):
+for i in range(100):
     iteration()
