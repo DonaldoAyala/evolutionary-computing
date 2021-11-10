@@ -126,8 +126,8 @@ class SOM:
 
 # Training the SOM
 # (height=10, width=10, FV_size=10, PV_size=10, radius=False, learning_rate=0.005):
-height, width = 20,20
-country_dev_som = SOM(height, width, 12, 1, False, 0.5)
+height, width = 10,10
+country_dev_som = SOM(height, width, 12, 1, False, 0.05)
 
 # Now you have the countries and variables to use
 data = []
@@ -166,11 +166,6 @@ testing_set = data[45:]
 
 country_dev_som.train(300, training_set)
 
-#for row in range(height):
-#    for col in range(width):
-#        print(country_tag[round(country_dev_som.nodes[row*height + col].PV[0])], end = "\t")
-#        #print(round(country_dev_som.nodes[row*height + col].PV[0], 2), end = "\t")
-#    print()
 
 bmu_som = [[[] for i in range(width)] for i in range(height)]
 
@@ -178,19 +173,18 @@ for country in data:
     country_bmu, x, y = country_dev_som.predict(country[0], True)
     bmu_som[y][x].append(country_tag[country[1][0]])
 
-max_elements = 0
 
 for arr in bmu_som:
     for c in arr:
-        max_elements = max(max_elements, len(c) + 2)
-
-print(max_elements)
-
-for arr in bmu_som:
-    for c in arr:
-        for s in c:
-            print(s,end = ",")
-        print(end = "\t"*(max_elements - len(c)))
-    print()
+        if (len(c) > 0):
+            for i in range(len(c)):
+                if i == len(c) - 1:
+                    print('\\tiny ',c[i], end = "")
+                else:
+                    print('\\tiny ',c[i], end = ",")
+        else:
+            print('-', end="")
+        print("&", end="")
+    print("\\\\ \\hline")
 
     
