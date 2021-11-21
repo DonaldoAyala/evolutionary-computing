@@ -24,14 +24,12 @@ class Painter:
                 elif grid[col][row] == 2:
                     pygame.draw.rect(self.screen, (0,0,0), rect)
                 else:
-                    pygame.draw.rect(self.screen, (90,90,90), rect)
+                    pygame.draw.rect(self.screen, (0,0,0), rect)
             
-        for row in range(self.dimensions[1]):
-            pygame.draw.line(self.screen, (0,0,0), (row*self.cellSize,0), (row*self.cellSize, self.width*self.cellSize))
-        for col in range(self.dimensions[0]):
-            pygame.draw.line(self.screen, (0,0,0), (0, col*self.cellSize), (self.height*self.cellSize, col*self.cellSize))
-        
-        
+        #for row in range(self.dimensions[1]):
+        #    pygame.draw.line(self.screen, (0,0,0), (row*self.cellSize,0), (row*self.cellSize, self.width*self.cellSize))
+        #for col in range(self.dimensions[0]):
+        #    pygame.draw.line(self.screen, (0,0,0), (0, col*self.cellSize), (self.height*self.cellSize, col*self.cellSize))
     
     def start(self, ca):        
         while(self.running):
@@ -53,19 +51,24 @@ class Painter:
             
             keys = pygame.key.get_pressed()
             if keys[pygame.K_r]:
-                ca.grid = [[random.randint(0,2) for j in range(self.width)] for i in range(self.height)]
-                for i in range(0,8,2):
-                    ca.rules[i] = random.randint(0,8)
-                    ca.rules[i + 1] = random.randint(ca.rules[i],8)
-                    ca.b = ca.rules[0:2]
-                    ca.s = ca.rules[2:4]
-                    ca.u = ca.rules[4:6]
-                    ca.r = ca.rules[6:8]
-                    print(ca.rules)
+                ca.grid = [[0 for j in range(self.width)] for i in range(self.height)]
+                # Uncomment following lines to generate random configurations and rules
+                #ca.grid = [[random.randint(0,2) for j in range(self.width)] for i in range(self.height)]
+                #for i in range(0,8,2):
+                #    ca.rules[i] = random.randint(0,8)
+                #    ca.rules[i + 1] = random.randint(ca.rules[i],8)
+                #    ca.b = ca.rules[0:2]
+                #    ca.s = ca.rules[2:4]
+                #    ca.u = ca.rules[4:6]
+                #    ca.r = ca.rules[6:8]
             if keys[pygame.K_SPACE]:
                 self.update = not self.update
+
+            
             
             if self.update:
+                ca.update()
+            elif keys[pygame.K_u]:
                 ca.update()
             self.paintGrid(ca.grid)
             pygame.display.flip()
