@@ -55,19 +55,19 @@ class CelullarAutomata1D:
         self.row = 1
     
     def applyRule(self, row, col):
-        left, middle, right = self.grid[row][col - 1], self.grid[row][col], self.grid[row][col + 1]
-        print("regla", left + middle * 2 + right * 4)
-        print(self.rules)
-        return int(self.rules[left + middle * 2 + right * 4])
+        rule = 0
+        shift = 0
+        for i in range(col - 2, col + 2):
+            rule += self.grid[row][i] << shift
+            shift += 1
+        return int(self.rules[rule])
 
 
     def update(self):
         if self.row >= self.height:
             return 
-
         newRow = [0]*self.width
-        print("newRow", newRow)
-        for i in range(1, self.width - 1):
+        for i in range(2, self.width - 2):
             newRow[i] = self.applyRule(self.row - 1, i)
         self.grid[self.row] = newRow
 
@@ -84,8 +84,12 @@ class CelullarAutomata1DSecondOrder:
         self.row = 1
     
     def applyRule(self, row, col):
-        left, middle, right = self.grid[row][col - 1], self.grid[row][col], self.grid[row][col + 1]
-        return int(self.rules[left + middle * 2 + right * 4])
+        rule = 0
+        shift = 0
+        for i in range(col - 2, col + 2):
+            rule += self.grid[row][i] << shift
+            shift += 1
+        return int(self.rules[rule])
 
 
     def update(self):
